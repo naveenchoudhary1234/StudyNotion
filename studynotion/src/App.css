@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+html.body{
+    overflow-x: hidden;
+}
+
+
+.homepage_bg{
+    background-image:"https://raw.githubusercontent.com/The-StudyNotion/StudyNotion-V1/388c11b1a011ccba6124bccb72ea68bd5bfd2199/Client/src/Asset/Image/bghome.svg";
+    
+}
+
