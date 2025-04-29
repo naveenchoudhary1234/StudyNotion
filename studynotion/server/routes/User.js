@@ -12,7 +12,7 @@ const {
   resetPassword,
 } = require("../controllers/ResetPasswords"); 
 
-const { auth } = require("../controllers/Auth");
+const { auth } = require("../middlewares/auth");
 
 router.post("/login", login);
 
@@ -20,7 +20,7 @@ router.post("/signup", signup);
 
 router.post("/sendotp", sendotp);
 
-// router.post("/changepassword", auth, changePassword);
+router.post("/changepassword", auth, changePassword);
 
 router.post("/reset-password-token", resetPasswordToken);
 

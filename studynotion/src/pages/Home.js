@@ -117,7 +117,7 @@ export default function Home() {
 
 
 {/* Section 2 */}
-<div className='bg-pure-greys-5 text-richblack-700'>
+       <div className='bg-pure-greys-5 text-richblack-700'>
   <div className='homepage_bg h-[310px]'>
     <div className='w-11/12 max-w-[70%] flex flex-col items-center justify-between gap-5 mx-auto'>
       <div className='h-[150px]'></div>
@@ -156,11 +156,11 @@ export default function Home() {
     <TimelineSection/>
 <LearningLaanguageSection/>
   </div>
-</div>
+       </div>
 
 {/* Section 3*/}
 
-<div className='w-11/12 mx-auto max-w-maxContent flex flex-col items-center justify-between bg-richblack-900 text-white'>
+       <div className='w-11/12 mx-auto max-w-maxContent flex flex-col items-center justify-between bg-richblack-900 text-white'>
 
 <Instructor/>
 <h2 className='text-center text-4xl front-semibold'>Review from Other Learners</h2>
@@ -174,7 +174,10 @@ export default function Home() {
 
 
 
-</div>
+        </div>
+
+
+  {/* Footer Section*/}
 <Footer/>
 
 

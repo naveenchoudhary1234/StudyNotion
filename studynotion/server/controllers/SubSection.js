@@ -1,26 +1,24 @@
 const Section = require("../Model/Section");
 const SubSection = require("../Model/SubSection");
-const { uploadImageCloudinary } = require("../Util/imageUpload");
+const { uploadImageToCloudinary } = require("../Util/imageUpload");
 
 exports.createSubSection = async (req, res) => {
   try {
     const { sectionId, title, description } = req.body;
-    const video = req.files?.video;
-    console.log("Temp_File_Path:", video.data);
+    const video = req.files.video;
 
     if (!sectionId || !title || !description || !video) {
       return res
         .status(404)
         .json({ success: false, message: "All Fields are Required" });
     }
+    console.log(video);
 
-    const uploadDetails = await uploadImageCloudinary(
-      video.tempFilePath,
-      video?.tempFilePath,
-      video.data,
-      'NaveenChoudhary'
+    const uploadDetails = await uploadImageToCloudinary(
+      video,
+      process.env.FOLDER_NAME
     );
-    console.log('uploadDetails', uploadDetails);
+    console.log(uploadDetails);
 
     const SubSectionDetails = await SubSection.create({
       title: title,
@@ -67,7 +65,7 @@ exports.updateSubSection = async (req, res) => {
     }
     if (req.files && req.files.video !== undefined) {
       const video = req.files.video;
-      const uploadDetails = await uploadImageCloudinary(
+      const uploadDetails = await uploadImageToCloudinary(
         video,
         process.env.FOLDER_NAME
       );

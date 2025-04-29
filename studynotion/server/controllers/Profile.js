@@ -3,9 +3,16 @@ const CourseProgress = require("../Model/CourseProgress");
 
 const Course = require("../Model/Course");
 const User = require("../Model/User");
-const { uploadImageCloudinary } = require("../Util/imageUpload");
+const { uploadImageToCloudinary } = require("../Util/imageUpload");
 const mongoose = require("mongoose");
 const { convertSecondsToDuration } = require("../Util/SecToDuration");
+
+
+// fetch the id 
+// id and update the details
+// firstname and lastnamr saved in the user entry
+// ecexpt all saved into profile entry
+
 
 exports.updateProfile = async (req, res) => {
   try {
@@ -53,6 +60,8 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
+// delete the progile and remove from the coursrs and delete the progile sectio 
+
 exports.deleteAccount = async (req, res) => {
   try {
     const id = req.user.id;
@@ -90,6 +99,7 @@ exports.deleteAccount = async (req, res) => {
   }
 };
 
+// mtlb puri details us bnde ki we are populating the addtional details also
 exports.getAllUserDetails = async (req, res) => {
   try {
     const id = req.user.id;
@@ -110,11 +120,12 @@ exports.getAllUserDetails = async (req, res) => {
   }
 };
 
+
 exports.updateDisplayPicture = async (req, res) => {
   try {
     const displayPicture = req.files.displayPicture;
     const userId = req.user.id;
-    const image = await uploadImageCloudinary(
+    const image = await uploadImageToCloudinary(
       displayPicture,
       process.env.FOLDER_NAME,
       1000,
@@ -207,6 +218,7 @@ exports.getEnrolledCourses = async (req, res) => {
   }
 };
 
+// gives list of courses and how many students are enrolled in this course and how much aamont collected from the courses
 exports.instructorDashboard = async (req, res) => {
   try {
     const courseDetails = await Course.find({ instructor: req.user.id });

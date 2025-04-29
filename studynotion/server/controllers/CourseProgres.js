@@ -4,6 +4,11 @@ const SubSection = require("../Model/SubSection");
 const CourseProgress = require("../Model/CourseProgress");
 const Course = require("../Model/Course");
 
+
+// find subsection and course id
+// find user id
+// then check calidation o those
+// if a user comolete its video first then retyurn response
 exports.updateCourseProgress = async (req, res) => {
   const { courseId, subsectionId } = req.body;
   const userId = req.user.id;

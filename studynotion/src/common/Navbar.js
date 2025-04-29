@@ -6,7 +6,9 @@ import { categories } from "../services/apis";
 import { ACCOUNT_TYPE } from "../utils/constants";
 import ProfileDropdown from "../components/core/auth/profileDropDown";
 import HamburgerMenu from "./HamburgerMenu";
+import { FaCode } from 'react-icons/fa'
 import { useEffect, useState } from "react";
+
 import {
   AiOutlineContacts,
   AiOutlineHome,
@@ -32,31 +34,24 @@ function Navbar() {
   const [loading2, setLoading2] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
-  // const [subLinks, setSubLinks] = useState([]);
+  const [subLinks, setSubLinks] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     setLoading(true);
-  //     try {
-  //       const res = await apiConnector("GET", categories.CATEGORIES_API);
-  //       console.log(res);
-  //       setSubLinks(res.data.data);
-  //     } catch (error) {
-  //       console.log("Could not fetch Categories.", error);
-  //     }
-  //     setLoading(false);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await apiConnector("GET", categories.CATEGORIES_API);
+        console.log(res);
+        setSubLinks(res.data.data);
+      } catch (error) {
+        console.log("Could not fetch Categories.", error);
+      }
+      setLoading(false);
+    })();
+  }, []);
 
-  const subLinks=[
-  {
-  "name":"Naveen",
-  "description":"jaat"
-  }
-
-
-  ]
+ 
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname);
   };
@@ -68,11 +63,11 @@ function Navbar() {
       } transition-all duration-200`}
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
-        {/* Logo */}
+        
         <Link to="/">
           <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
         </Link>
-        {/* Navigation links */}
+        
         <nav className="hidden md:block">
           <ul className="flex gap-x-6 text-richblack-25">
             {NavbarLinks.map((link, index) => (
@@ -136,18 +131,35 @@ function Navbar() {
             ))}
           </ul>
         </nav>
-        {/* Login / Signup / Dashboard */}
+    
         <div className="hidden items-center gap-x-4 md:flex">
-          {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-            <Link to="/dashboard/cart" className="relative">
-              <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
-              {totalItems > 0 && (
-                <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
-                  {totalItems}
-                </span>
-              )}
-            </Link>
-          )}
+  {token !== null && (
+    <Link to="/voice">
+     <button className="w-10 h-10 flex items-center justify-center rounded-full border border-richblack-700 bg-richblack-800 text-richblack-100 text-sm hover:text-yellow-100 hover:rotate-90 transition-transform duration-300">
+  AI
+</button>
+
+    </Link>
+  )}
+{token !== null && (
+  <Link to="/compiler">
+    <button className="w-12 h-12 flex items-center justify-center rounded-full border border-richblack-700 bg-richblack-800 text-richblack-100 hover:text-yellow-100 hover:rotate-90 hover:scale-105 transition-transform duration-300 ease-in-out shadow-lg hover:shadow-xl">
+      <FaCode className="text-xl" />  
+    </button>
+  </Link>
+)}
+
+  {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
+    <Link to="/dashboard/cart" className="relative">
+      <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
+      {totalItems > 0 && (
+        <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
+          {totalItems}
+        </span>
+      )}
+    </Link>
+  )}
+
           {token === null && (
             <Link to="/login">
               <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 uppercase">
@@ -163,6 +175,7 @@ function Navbar() {
             </Link>
           )}
           {token !== null && <ProfileDropdown />}
+       
         </div>
         <div className="mr-4 md:hidden">
           <GiHamburgerMenu
@@ -187,7 +200,9 @@ function Navbar() {
                     Log In
                   </div>
                 </Link>
-              )}is 
+              )}
+
+              
 
               {token === null && (
                 <Link to={"/signup"} onClick={() => setIsMenuModalOpen(false)}>
@@ -207,20 +222,11 @@ function Navbar() {
                     <VscDashboard className="text-lg" />
                     Dashboard
                   </div>
+                  
                 </Link>
               )}
 
-              {token !== null && user && user?.role === "Student" && (
-                <Link
-                  to={"/dashboard/cart"}
-                  onClick={() => setIsMenuModalOpen(false)}
-                >
-                  <div className="flex gap-x-2 items-center w-full py-2 px-3 text-richblack-100 hover:text-richblack-25 hover:bg-richblack-700 uppercase tracking-wider">
-                    <AiOutlineShoppingCart className="text-lg" />
-                    Cart
-                  </div>
-                </Link>
-              )}
+    
 
               {token !== null && (
                 <div
@@ -232,7 +238,7 @@ function Navbar() {
                 </div>
               )}
 
-              {/* General Buttons */}
+          
               <div className="h-[1px] my-2 bg-richblack-100 w-3/4 mx-auto"></div>
 
               <Link to={"/"} onClick={() => setIsMenuModalOpen(false)}>
@@ -255,6 +261,7 @@ function Navbar() {
                   Contact
                 </div>
               </Link>
+         
 
               {/* Category */}
               <div

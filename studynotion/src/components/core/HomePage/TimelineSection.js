@@ -1,29 +1,26 @@
 import React from 'react';
-import Logo1 from "../../../assets/logo/Logo-Full-Dark.png"
-import Logo2 from "../../../assets/logo/Logo-Full-Light.png"
-import Logo3 from "../../../assets/logo/Logo-Small-Dark.png"
-import Logo4 from "../../../assets/logo/Logo-Small-Light.png"
+
 
 
 const timeline=[
 {    
-Logo:Logo1,
+Logo:"https://up.yimg.com/ib/th?id=OIP.lG4HP5JyRLHVXVvHy4gKdgHaFd&pid=Api&rs=1&c=1&qlt=95&w=144&h=106",
 heading:"Leadership",
 Description:"Fully Committed to the success Company",
 },
 {
-    Logo:Logo2,
-    heading:"Leadership",
+    Logo:"https://up.yimg.com/ib/th?id=OIP.dGl5Sax_htYWVuS68Gk0dgHaE8&pid=Api&rs=1&c=1&qlt=95&w=170&h=113",
+    heading:"Vision",
     Description:"Fully Committed to the success Company",
 },
 {
-    Logo:Logo3,
-    heading:"Leadership",
+    Logo:"https://up.yimg.com/ib/th?id=OIP.qK-IYWnRh6np5esVA21NhAHaHa&pid=Api&rs=1&c=1&qlt=95&w=121&h=121",
+    heading:"Team Growth",
     Description:"Fully Committed to the success Company",
 },
 {
-    Logo:Logo4,
-    heading:"Leadership",
+    Logo:"https://up.yimg.com/ib/th?id=OIP.Us-trweyflNCZ-6B7byUBAHaH6&pid=Api&rs=1&c=1&qlt=95&w=110&h8",
+    heading:"Happiness",
     Description:"Fully Committed to the success Company",
 }
 

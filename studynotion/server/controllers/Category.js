@@ -39,6 +39,8 @@ exports.createCategory = async (req, res) => {
 
 
 // find all the courses 
+// first find all the courses which are publiched using populate
+
 
 exports.showAllCategories = async (req, res) => {
   try {
@@ -58,6 +60,8 @@ exports.showAllCategories = async (req, res) => {
     });
   }
 };
+
+
 
 exports.categoryPageDetails = async (req, res) => {
   try {

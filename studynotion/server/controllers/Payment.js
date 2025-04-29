@@ -264,12 +264,17 @@
 
 
 // }
-const { instance } = require("../config/razorpay");
+
+const{instance}=require("../config/razorpay");
 const Course = require("../Model/Course");
 const crypto = require("crypto");
 const User = require("../Model/User");
 const mailSender = require("../Util/MailSender");
 const mongoose = require("mongoose");
+require("dotenv").config();
+console.log(process.env.RAJORPAY_SECRET);
+
+
 const {
   courseEnrollmentEmail,
 } = require("../Mail/Template/CourseEnrollmentEmail");
@@ -278,10 +283,13 @@ const CourseProgress = require("../Model/CourseProgress");
 
 exports.capturePayment = async (req, res) => {
   const { courses } = req.body;
+  console.log(courses);
   const userId = req.user.id;
+  console.log(userId);
   if (!courses.length) {
     return res.json({ success: false, message: "Please Provide Course ID" });
   }
+  // for checkout we calculate the total amount 
   let total_amount = 0;
   for (const course_id of courses) {
     let course;
@@ -293,6 +301,7 @@ exports.capturePayment = async (req, res) => {
           .json({ success: false, message: "Could not find the Course" });
       }
       const uid = new mongoose.Types.ObjectId(userId);
+      console.log(uid);
       if (course.studentsEnroled.includes(uid)) {
         return res
           .status(200)
@@ -330,6 +339,11 @@ exports.verifyPayment = async (req, res) => {
   const razorpay_signature = req.body?.razorpay_signature;
   const courses = req.body?.courses;
   const userId = req.user.id;
+  console.log(razorpay_order_id);
+  console.log(razorpay_payment_id);
+  console.log(razorpay_signature);
+  console.log(courses);
+  console.log
   if (
     !razorpay_order_id ||
     !razorpay_payment_id ||
@@ -341,7 +355,7 @@ exports.verifyPayment = async (req, res) => {
   }
   let body = razorpay_order_id + "|" + razorpay_payment_id;
   const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_SECRET)
+    .createHmac("sha256", process.env.RAJORPAY_SECRET)
     .update(body.toString())
     .digest("hex");
   if (expectedSignature === razorpay_signature) {

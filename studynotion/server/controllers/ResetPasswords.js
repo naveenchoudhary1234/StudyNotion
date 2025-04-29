@@ -2,6 +2,7 @@ const User = require("../Model/User");
 const mailSender = require("../Util/MailSender")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
+const FRONTEND_URL = "http://localhost:3000";
 
 
 // get email from body
@@ -40,7 +41,8 @@ exports.resetPasswordToken = async (req, res) => {
     )
     console.log("DETAILS", updatedDetails)
 
-    const url = `https://studynotion-edtech-project.vercel.app/update-password/${token}`
+    const url = `${FRONTEND_URL}/update-password/${token}`;
+
 
     await mailSender(
       email,

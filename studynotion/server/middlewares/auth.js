@@ -13,11 +13,12 @@ dotenv.config();
 exports.auth = async (req, res, next) => {
 	try {
 		
+		
 		const token =
 			req.cookies.token ||
 			req.body.token ||
 			req.header("Authorization").replace("Bearer ", "");
-
+			
 		
 		if (!token) {
 			return res.status(401).json({ success: false, message: `Token Missing` });
@@ -49,7 +50,7 @@ exports.auth = async (req, res, next) => {
 exports.isStudent = async (req, res, next) => {
 	try {
 		const userDetails = await User.findOne({ email: req.user.email });
-		console.log(userDetails.accountType);
+		
 
 		if (userDetails.accountType !== "Student") {
 			return res.status(401).json({

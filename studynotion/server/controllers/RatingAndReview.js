@@ -2,6 +2,8 @@ const RatingAndReview = require("../Model/RatingAndReview");
 const Course = require("../Model/Course");
 const mongoose = require("mongoose");
 
+// cuser id and course id then create an entry in db and then findbyid and update to the course id
+
 exports.createRating = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -60,6 +62,8 @@ exports.createRating = async (req, res) => {
   }
 };
 
+// cours id k andar aggregate function use krmege jisme match krnege
+
 exports.getAverageRating = async (req, res) => {
   try {
     const courseId = req.body.courseId;
@@ -95,6 +99,8 @@ exports.getAverageRating = async (req, res) => {
     });
   }
 };
+
+// fetch all rating and reviews from all the colections
 
 exports.getAllRatingReview = async (req, res) => {
   try {

@@ -3,9 +3,9 @@ const Category = require("../Model/Category");
 const Section = require("../Model/Section");
 const SubSection = require("../Model/SubSection");
 const User = require("../Model/User");
-const { uploadImageCloudinary } = require("../Util/imageUpload");
+const { uploadImageToCloudinary } = require("../Util/imageUpload");
 const CourseProgress = require("../Model/CourseProgress");
-const { convertSecondsToDuration } = require("../Util/SecToDuration"); // pending
+const { convertSecondsToDuration } = require("../Util/SecToDuration"); 
 
 
 
@@ -39,7 +39,7 @@ exports.createCourse = async (req, res) => {
 
     const thumbnail = req.files.thumbnailImage;
 
-    const tag = JSON.parse(_tag);
+    const tag = JSON.parse(_tag); // convert in into object
     const instructions = JSON.parse(_instructions);
 
     if (
@@ -49,7 +49,8 @@ exports.createCourse = async (req, res) => {
       !price ||
       !tag.length ||
       !thumbnail ||
-      !category ||
+      !category || 
+      
       !instructions.length
     ) {
       return res.status(400).json({
@@ -79,7 +80,7 @@ exports.createCourse = async (req, res) => {
       });
     }
 
-    const thumbnailImage = await uploadImageCloudinary(
+    const thumbnailImage = await uploadImageToCloudinary(
       thumbnail,
       process.env.FOLDER_NAME
     );
@@ -132,6 +133,14 @@ exports.createCourse = async (req, res) => {
   }
 };
 
+
+// first find the id of courseid
+// then teke the dta from body jo update krna hain
+// agar image aayi h to locudinary p upload krdenge
+// otherwise for loop gadengde all updated p
+// then save the entry in db
+// then return thr response
+
 exports.editCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
@@ -145,7 +154,7 @@ exports.editCourse = async (req, res) => {
     if (req.files) {
       console.log("thumbnail update");
       const thumbnail = req.files.thumbnailImage;
-      const thumbnailImage = await uploadImageCloudinary(
+      const thumbnailImage = await uploadImageToCloudinary(
         thumbnail,
         process.env.FOLDER_NAME
       );
@@ -199,7 +208,7 @@ exports.editCourse = async (req, res) => {
 };
 
 
-
+// we get all course by using status publichaed and filtered value by using find method
 exports.getAllCourses = async (req, res) => {
   try {
     const allCourses = await Course.find(
@@ -229,6 +238,12 @@ exports.getAllCourses = async (req, res) => {
     });
   }
 };
+
+
+/// single course dtails chaiyee h hmee 
+// then we find the course id from rwq.body
+// /// find the course id
+// then find the course dtails and we hide the video url using select in populate method
 
 exports.getCourseDetails = async (req, res) => {
   try {
@@ -284,6 +299,10 @@ exports.getCourseDetails = async (req, res) => {
     });
   }
 };
+
+// we make this from above bcoz above is public access anyone can see but our this we use middleware to protect that the login and enrolled one can see its progess details
+
+
 exports.getFullCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
@@ -349,6 +368,8 @@ exports.getFullCourseDetails = async (req, res) => {
   }
 };
 
+
+// fetch all its instructor courses
 exports.getInstructorCourses = async (req, res) => {
   try {
     const instructorId = req.user.id;
@@ -378,6 +399,11 @@ exports.getInstructorCourses = async (req, res) => {
     });
   }
 };
+
+
+// delete the course
+// delete the student profile
+// delete the courses section and subsection
 
 exports.deleteCourse = async (req, res) => {
   try {

@@ -11,11 +11,13 @@ require("dotenv").config();
 // fetch all data from req.bodu
 // validation
 // match the password
+ // check existing user from finding the email id
 // then find otp // by using sort and created at we find most recent otp
 // match otp
 // approved by instructor or not
 // then hashing the password
 // then db m entry krdo
+// profile details using create and then user details
 // then return response
 
 
@@ -209,7 +211,7 @@ exports.sendotp = async (req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    const result = await OTP.findOne({ otp: otp });
+    const result = await OTP.findOne({ otp: otp }); // kisi aur user k liye ye same otp to generate nhii hua h islie hmne ye likhaa
     console.log("Result is Generate OTP Func");
     console.log("OTP", otp);
     console.log("Result", result);
@@ -251,6 +253,7 @@ exports.changePassword = async (req, res) => {
 
     
     const userDetails = await User.findById(req.user.id);
+    console.log(userDetails);
     if (!userDetails || !userDetails.password) {
       return res.status(404).json({
         success: false,
