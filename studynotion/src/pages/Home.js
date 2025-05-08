@@ -10,6 +10,7 @@ import LearningLaanguageSection from '../components/core/HomePage/LearningLaangu
 import Instructor from '../components/core/HomePage/Instructor';
 import Footer from '../common/Footer';
 import ExploreMore from '../components/core/HomePage/ExploreMore';
+import ReviewSlider from '../common/ReviewSlider';
 export default function Home() {
   return (
     <div>
@@ -164,7 +165,7 @@ export default function Home() {
 
 <Instructor/>
 <h2 className='text-center text-4xl front-semibold'>Review from Other Learners</h2>
-
+<ReviewSlider/>
 
 
 

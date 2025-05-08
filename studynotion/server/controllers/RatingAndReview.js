@@ -7,12 +7,14 @@ const mongoose = require("mongoose");
 exports.createRating = async (req, res) => {
   try {
     const userId = req.user.id;
+ 
     const { rating, review, courseId } = req.body;
 
     const courseDetails = await Course.findOne({
       _id: courseId,
       studentsEnroled: { $elemMatch: { $eq: userId } },
     });
+    console.log(courseDetails);
 
     if (!courseDetails) {
       return res.status(404).json({

@@ -30,6 +30,7 @@ exports.auth = async (req, res, next) => {
 			console.log(decode);
 			
 			req.user = decode;
+			console.log(req.user);
 		} catch (error) {
 			
 			return res

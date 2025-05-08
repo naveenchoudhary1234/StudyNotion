@@ -3,6 +3,7 @@ import ContactFormSection from '../components/core/aboutpage/ContactFormSection'
 import ContactUsForm from '../common/ContactUsForm';
 import Footer from '../common/Footer';
 import ContactDetails from './ContactDetails';
+import ReviewSlider from '../common/ReviewSlider';
 
 
 
@@ -26,7 +27,7 @@ const Contact = () => {
         <h1 className="text-center text-4xl font-semibold mt-8">
           Reviews from other learners
         </h1>
-        {/* <ReviewSlider /> */}
+        <ReviewSlider/>
       </div>
       <Footer />
     </div>

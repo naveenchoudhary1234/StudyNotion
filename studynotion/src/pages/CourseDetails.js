@@ -1,88 +1,76 @@
-import React, { useEffect, useState } from "react"
-import { BiInfoCircle } from "react-icons/bi"
-import { HiOutlineGlobeAlt } from "react-icons/hi"
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { BiInfoCircle } from "react-icons/bi";
+import { HiOutlineGlobeAlt } from "react-icons/hi";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import ConfirmationModal from "../common/ConfirmationModal";
 import Footer from "../common/Footer";
 import RatingStars from "../common/RatingStars";
-import CourseAccordionBar from "../components/core/Course/CourseAccordingBar"
+import CourseAccordionBar from "../components/core/Course/CourseAccordingBar";
 import CourseDetailsCard from "../components/core/Course/CourseDetailsCard";
 import { formatDate } from "../utils/formatDate";
 import { fetchCourseDetails } from "../services/operation/courseDetailsApi";
 import { BuyCourse } from "../services/operation/studentFeaturesapi";
 import GetAvgRating from "../utils/avgRating";
-import Error from "./Error"
+import Error from "./Error";
 
 function CourseDetails() {
-  const { user } = useSelector((state) => state.profile)
-  const { token } = useSelector((state) => state.auth)
-  const { loading } = useSelector((state) => state.profile)
-  const { paymentLoading } = useSelector((state) => state.course)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { user } = useSelector((state) => state.profile);
+  const { token } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.profile);
+  const { paymentLoading } = useSelector((state) => state.course);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const { courseId } = useParams();
 
-  const { courseId } = useParams()
+  const [response, setResponse] = useState(null);
+  const [confirmationModal, setConfirmationModal] = useState(null);
 
-
-
-  const [response, setResponse] = useState(null)
-  const [confirmationModal, setConfirmationModal] = useState(null)
   useEffect(() => {
-
-    ; (async () => {
+    (async () => {
       try {
-        const res = await fetchCourseDetails(courseId)
-
-        setResponse(res)
+        const res = await fetchCourseDetails(courseId);
+        setResponse(res);
       } catch (error) {
-        console.log("Could not fetch Course Details")
+        console.log("Could not fetch Course Details");
       }
-    })()
-  }, [courseId])
+    })();
+  }, [courseId]);
 
-
-
-
-  const [avgReviewCount, setAvgReviewCount] = useState(0)
+  const [avgReviewCount, setAvgReviewCount] = useState(0);
   useEffect(() => {
-    const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)
-    setAvgReviewCount(count)
-  }, [response])
+    const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews);
+    setAvgReviewCount(count);
+  }, [response]);
 
-
-
-
-  const [isActive, setIsActive] = useState(Array(0))
+  const [isActive, setIsActive] = useState(Array(0));
   const handleActive = (id) => {
-
     setIsActive(
       !isActive.includes(id)
         ? isActive.concat([id])
-        : isActive.filter((e) => e != id)
-    )
-  }
+        : isActive.filter((e) => e !== id)
+    );
+  };
 
-
-  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0)
+  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
   useEffect(() => {
-    let lectures = 0
+    let lectures = 0;
     response?.data?.courseDetails?.courseContent?.forEach((sec) => {
-      lectures += sec.subSection.length || 0
-    })
-    setTotalNoOfLectures(lectures)
-  }, [response])
+      lectures += sec.subSection.length || 0;
+    });
+    setTotalNoOfLectures(lectures);
+  }, [response]);
 
   if (loading || !response) {
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
         <div className="spinner"></div>
       </div>
-    )
+    );
   }
   if (!response.success) {
-    return <Error />
+    return <Error />;
   }
 
   const {
@@ -97,12 +85,12 @@ function CourseDetails() {
     instructor,
     studentsEnroled,
     createdAt,
-  } = response.data?.courseDetails
+  } = response.data?.courseDetails;
 
   const handleBuyCourse = () => {
     if (token) {
-      BuyCourse(token, [courseId], user, navigate, dispatch)
-      return
+      BuyCourse(token, [courseId], user, navigate, dispatch);
+      return;
     }
     setConfirmationModal({
       text1: "You are not logged in!",
@@ -111,46 +99,44 @@ function CourseDetails() {
       btn2Text: "Cancel",
       btn1Handler: () => navigate("/login"),
       btn2Handler: () => setConfirmationModal(null),
-    })
-  }
+    });
+  };
 
   if (paymentLoading) {
-
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
         <div className="spinner"></div>
       </div>
-    )
+    );
   }
 
   return (
     <>
-      <div className={`relative w-full bg-richblack-800`}>
+      <div className="relative w-full bg-richblack-800">
         {/* Hero Section */}
-        <div className="mx-auto box-content px-4 lg:w-[1260px] 2xl:relative ">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-50"></div>
+        <div className="mx-auto box-content px-4 lg:w-[1260px] relative z-10">
           <div className="mx-auto grid min-h-[450px] max-w-maxContentTab justify-items-center py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-[810px]">
             <div className="relative block max-h-[30rem] lg:hidden">
-              <div className="absolute bottom-0 left-0 h-full w-full shadow-[#161D29_0px_-64px_36px_-28px_inset]"></div>
+ <div className="absolute bottom-0 left-0 h-full w-full shadow-[#161D29_0px_-64px_36px_-28px_inset]"></div>
               <img
                 src={thumbnail}
                 alt="course thumbnail"
                 className="aspect-auto w-full"
               />
             </div>
-            <div
-              className={`z-30 my-5 flex flex-col justify-center gap-4 py-5 text-lg text-richblack-5`}
-            >
+            <div className="z-30 my-5 flex flex-col justify-center gap-4 py-5 text-lg text-richblack-5">
               <div>
                 <p className="text-4xl font-bold text-richblack-5 sm:text-[42px] tracking-wider lg:text-left text-center">
                   {courseName}
                 </p>
               </div>
-              <p className={`text-richblack-200`}>
-                <ul style={{ listStyle: 'none', padding: 0 }} >
-                  {courseDescription.split('\n').map((line, index) => (
-                    <li key={index} style={{ display: 'flex', alignItems: 'flex-start' }}>
-                      <span style={{ marginRight: '0.5em' }}>{index + 1}.</span>
-                      <span>{line.trim().substring(line.indexOf('.') + 1).trim()}</span>
+              <p className="text-richblack-200">
+                <ul className="list-none p-0">
+                  {courseDescription.split("\n").map((line, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="mr-2">{index + 1}.</span>
+                      <span>{line.trim().substring(line.indexOf(".") + 1).trim()}</span>
                     </li>
                   ))}
                 </ul>
@@ -162,17 +148,13 @@ function CourseDetails() {
                 <span>{`${studentsEnroled.length} students enrolled`}</span>
               </div>
               <div>
-                <p className="">
-                  Created By {`${instructor.firstName} ${instructor.lastName}`}
-                </p>
+                <p>Created By {`${instructor.firstName} ${instructor.lastName}`}</p>
               </div>
               <div className="flex flex-wrap gap-5 text-lg">
                 <p className="flex items-center gap-2">
-                  {" "}
                   <BiInfoCircle /> Created at {formatDate(createdAt)}
                 </p>
                 <p className="flex items-center gap-2">
-                  {" "}
                   <HiOutlineGlobeAlt /> English
                 </p>
               </div>
@@ -181,14 +163,26 @@ function CourseDetails() {
               <p className="space-x-3 pb-4 text-3xl font-semibold text-richblack-5">
                 Rs. {price}
               </p>
-              <button className="yellowButton uppercase tracking-wider" onClick={handleBuyCourse}>
-                Buy Now
-              </button>
-              <button className="blackButton uppercase tracking-wider">Add to Cart</button>
+              <button 
+  onClick={handleBuyCourse}
+  className="relative bg-red-500 text-white font-bold py-3 px-10 font-sans overflow-hidden z-10 group"
+>
+  <span className="relative z-10 text-white group-hover:text-red-500 transition duration-500">Buy Now</span>
+  <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-500 ease-in-out group-hover:scale-x-100 z-0"></span>
+</button>
+
+<button 
+  className="relative bg-gray-800 text-white font-bold py-3 px-10 font-sans overflow-hidden z-10 group"
+>
+  <span className="relative z-10 text-white group-hover:text-gray-300 transition duration-500">Add to Cart</span>
+  <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-500 ease-in-out group-hover:scale-x-100 z-0"></span>
+</button>
+
+
             </div>
           </div>
           {/* Courses Card */}
-          <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute  lg:block">
+          <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute lg:block bg-white shadow-lg rounded-lg p-4">
             <CourseDetailsCard
               course={response?.data?.courseDetails}
               setConfirmationModal={setConfirmationModal}
@@ -197,17 +191,18 @@ function CourseDetails() {
           </div>
         </div>
       </div>
+
       <div className="mx-auto box-content px-4 text-start text-richblack-5 lg:w-[1260px]">
-        <div className="mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]">
+        <div className="mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px] grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* What will you learn section */}
-          <div className="my-8 border border-richblack-600 p-8">
+          <div className="my-8 border border-richblack-600 p-8 rounded-lg shadow-md">
             <p className="text-3xl font-semibold uppercase tracking-wider">What you'll Learn?</p>
             <div className="mt-5">
-              <ul style={{ listStyle: 'none', padding: 0 }} className="leading-relaxed">
-                {whatYouWillLearn.split('\n').map((line, index) => (
-                  <li key={index} style={{ display: 'flex', alignItems: 'flex-start' }}>
-                    <span style={{ marginRight: '0.5em' }}>{index + 1}.</span>
-                    <span>{line.trim().substring(line.indexOf('.') + 1).trim()}</span>
+              <ul className="list-none p-0 leading-relaxed">
+                {whatYouWillLearn.split("\n").map((line, index) => (
+                  <li key={index} className="flex items-start">
+                    <span className="mr-2">{index + 1}.</span>
+                    <span>{line.trim().substring(line.indexOf(".") + 1).trim()}</span>
                   </li>
                 ))}
               </ul>
@@ -218,13 +213,13 @@ function CourseDetails() {
           <div className="max-w-[830px] ">
             <div className="flex flex-col gap-3">
               <p className="text-[28px] font-semibold uppercase tracking-wider">Course Content</p>
-              <div className="flex flex-wrap justify-between gap-2">
+              <div className ="flex flex-wrap justify-between gap-2">
                 <div className="flex gap-2 tracking-wide">
                   <span>
-                    {courseContent.length} {`section(s)`}
+                    {courseContent.length} section(s)
                   </span>
                   <span>
-                    {totalNoOfLectures} {`lecture(s)`}
+                    {totalNoOfLectures} lecture(s)
                   </span>
                   <span>{response.data?.totalDuration}</span>
                 </div>
@@ -252,7 +247,7 @@ function CourseDetails() {
             </div>
 
             {/* Author Details */}
-            <div className="mb-12 py-4">
+            <div className="mb-12 py-4 bg-gray-100 p-4 rounded-lg shadow-md">
               <p className="text-[28px] font-semibold">Author</p>
               <div className="flex items-center gap-4 py-4">
                 <img
@@ -262,11 +257,11 @@ function CourseDetails() {
                       : `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
                   }
                   alt="Author"
-                  className="h-14 w-14 rounded-full object-cover"
+                  className="h-14 w-14 rounded-full object-cover border-2 border-gray-300"
                 />
-                <p className="text-lg">{`${instructor.firstName} ${instructor.lastName}`}</p>
+                <p className="text-lg font-semibold">{`${instructor.firstName} ${instructor.lastName}`}</p>
               </div>
-              <p className="text-richblack-50">
+              <p className="text-gray-600">
                 {instructor?.additionalDetails?.about}
               </p>
             </div>
@@ -276,7 +271,7 @@ function CourseDetails() {
       <Footer />
       {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </>
-  )
+  );
 }
 
-export default CourseDetails
+export default CourseDetails;

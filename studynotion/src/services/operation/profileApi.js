@@ -83,3 +83,4 @@ export async function getInstructorData(token) {
   toast.dismiss(toastId)
   return result
 }
+

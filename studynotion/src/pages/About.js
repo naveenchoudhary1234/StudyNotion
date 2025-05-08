@@ -5,6 +5,7 @@ import Footer from '../common/Footer';
 import StatsComponent from '../components/core/aboutpage/StatsComponent';
 import LearningGrid from '../components/core/aboutpage/LearningGrid';
 import ContactFormSection from '../components/core/aboutpage/ContactFormSection';
+import ReviewSlider from '../common/ReviewSlider';
 export default function () {
   return (
     <div>
@@ -109,7 +110,7 @@ export default function () {
       <h1 className="text-center text-4xl font-semibold mt-8">
         Reviews from other learners
       </h1>
-      {/* <ReviewSlider /> */}
+      <ReviewSlider/>
     </div>
     <Footer />
   </div>

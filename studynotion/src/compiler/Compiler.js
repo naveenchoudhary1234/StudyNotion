@@ -52,8 +52,8 @@ function Compiler() {
         },
         {
           headers: {
-            "x-rapidapi-key": "YOUR_RAPIDAPI_KEY",
-            "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+            "x-rapidapi-key": "6164491045mshbc12455a5c2474ep17f4fejsn4df0836e82ac",
+            "x-rapidapi-host": "judge029.p.rapidapi.com",
             "Content-Type": "application/json",
           },
         }

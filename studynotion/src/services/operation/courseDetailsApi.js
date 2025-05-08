@@ -366,9 +366,12 @@ export const markLectureAsComplete = async (data, token) => {
   return result
 }
 
-// create a rating for course
+// create a rating for course 
+// eror in this
 export const createRating = async (data, token) => {
   const toastId = toast.loading("Loading...")
+  console.log(data);
+  console.log(token);
   let success = false
   try {
     const response = await apiConnector("POST", CREATE_RATING_API, data, {
